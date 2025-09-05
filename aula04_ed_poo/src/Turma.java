@@ -9,7 +9,8 @@ public class Turma {
 
     public Turma (int capacidade, String semestre){
         if (capacidade<=0){
-            System.out.println("Capacidade inválida");
+            // System.out.println("Capacidade inválida");
+            throw new IllegalArgumentException("Capacidade inválida");
         }else{
             // definindo o tamanho o vetor 
             this.alunos= new Aluno[capacidade];
@@ -20,11 +21,41 @@ public class Turma {
 
     public boolean inserir(Aluno aluno){
         if(tamanho == alunos.length){
+
             return false; // que o Vetor esta cheio
         }else {
             alunos[tamanho++] = aluno;
             return true; //aluno inserido no vetor
         }
+    }
+
+    public Aluno[] listar(){
+        Aluno[] copia = new Aluno[tamanho];
+        for(int i = 0; i <tamanho; i++){
+            copia[i] = alunos[i];
+        }
+        return copia;
+    }
+
+    public boolean remover(int ra){
+        for (int i=0; i< tamanho; i++){
+            if(alunos[i].getRa()== ra){
+                alunos[i] = alunos[tamanho-1];
+                alunos[tamanho-1]= null;
+                tamanho--; 
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Aluno localizarRA(int ra){
+        for(int i=0; i<tamanho; i++){
+            if(alunos[i].getRa() == ra){
+                return alunos[i];
+            }
+        }
+        return null;
     }
 
     public int capacidadeTurma(){
